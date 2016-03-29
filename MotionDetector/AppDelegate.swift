@@ -7,15 +7,36 @@
 //
 
 import UIKit
+import CoreMotion
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    let motionManager = CMMotionActivityManager()
+    var viewController: ViewController?
+    var activities: [CMMotionActivity]?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        self.viewController = self.window?.rootViewController as? ViewController
+        motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
+            activity in
+                self.viewController?.currentLabel.text = activity?.humanReadable()
+            
+        })
+        
+        motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
+            activities, error in
+            if let _ = activities {
+                self.activities = activities
+            }
+            else {
+                self.activities = []
+            }
+            self.viewController!.updateTable(self.activities!)
+            
+        })
         return true
     }
 
@@ -40,7 +61,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+}
 
+extension CMMotionActivity {
+    func humanReadable() -> String {
+        if self.walking {
+            return "Walking"
+        }
+        else if self.stationary {
+            return "Stationary"
+        }
+        else if self.automotive {
+            return "Automotive"
+        }
+        else if self.running {
+            return "Running"
+        }
+        else if self.cycling {
+            return "Cycling"
+        }
+        else {
+            return "Unknown"
+        }
 
+    }
+}
+
+extension CMMotionActivityConfidence {
+    func humanReadable() -> String {
+        if self == .High {
+            return "High"
+        }
+        else if self == .Medium {
+            return "Medium"
+        }
+        else {
+            return "Low"
+        }
+    }
 }
 

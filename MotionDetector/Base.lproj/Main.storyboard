@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MotionDetector" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +17,125 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vx8-LJ-F97">
+                                <rect key="frame" x="253" y="98" width="110" height="200"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ0-8c-lIT" userLabel="Current">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mm6-s8-N96">
+                                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="60"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="mm6-s8-N96" firstAttribute="centerX" secondItem="yQ0-8c-lIT" secondAttribute="centerX" id="874-Nj-lpJ"/>
+                                            <constraint firstItem="mm6-s8-N96" firstAttribute="centerY" secondItem="yQ0-8c-lIT" secondAttribute="centerY" id="Ey5-zA-U8D"/>
+                                            <constraint firstItem="mm6-s8-N96" firstAttribute="height" secondItem="yQ0-8c-lIT" secondAttribute="height" multiplier="0.5" id="fC3-Nm-nlj"/>
+                                            <constraint firstItem="mm6-s8-N96" firstAttribute="width" secondItem="yQ0-8c-lIT" secondAttribute="width" id="wuN-hw-9Bw"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="mm6-s8-N96"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <exclude reference="874-Nj-lpJ"/>
+                                                <exclude reference="Ey5-zA-U8D"/>
+                                                <exclude reference="fC3-Nm-nlj"/>
+                                                <exclude reference="wuN-hw-9Bw"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="subviews">
+                                                <include reference="mm6-s8-N96"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <include reference="874-Nj-lpJ"/>
+                                                <include reference="Ey5-zA-U8D"/>
+                                                <include reference="fC3-Nm-nlj"/>
+                                                <include reference="wuN-hw-9Bw"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k8o-3T-fJG" userLabel="History">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="k8o-3T-fJG" firstAttribute="height" secondItem="Vx8-LJ-F97" secondAttribute="height" multiplier="0.8" id="2Es-Pm-Od9"/>
+                                    <constraint firstItem="yQ0-8c-lIT" firstAttribute="height" secondItem="Vx8-LJ-F97" secondAttribute="height" multiplier="0.2" id="Plj-VS-LTf"/>
+                                    <constraint firstItem="k8o-3T-fJG" firstAttribute="width" secondItem="Vx8-LJ-F97" secondAttribute="width" id="WaQ-7G-PAk"/>
+                                    <constraint firstItem="k8o-3T-fJG" firstAttribute="centerX" secondItem="Vx8-LJ-F97" secondAttribute="centerX" id="e4F-22-vg9"/>
+                                    <constraint firstAttribute="bottom" secondItem="k8o-3T-fJG" secondAttribute="bottom" id="nfP-Sv-iSd"/>
+                                    <constraint firstItem="yQ0-8c-lIT" firstAttribute="centerX" secondItem="Vx8-LJ-F97" secondAttribute="centerX" id="oTC-9q-2QD"/>
+                                    <constraint firstItem="yQ0-8c-lIT" firstAttribute="top" secondItem="Vx8-LJ-F97" secondAttribute="top" id="pVg-f2-ZeX"/>
+                                    <constraint firstItem="yQ0-8c-lIT" firstAttribute="width" secondItem="Vx8-LJ-F97" secondAttribute="width" id="trw-DZ-Evz"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="yQ0-8c-lIT"/>
+                                        <exclude reference="k8o-3T-fJG"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="2Es-Pm-Od9"/>
+                                        <exclude reference="WaQ-7G-PAk"/>
+                                        <exclude reference="e4F-22-vg9"/>
+                                        <exclude reference="nfP-Sv-iSd"/>
+                                        <exclude reference="Plj-VS-LTf"/>
+                                        <exclude reference="oTC-9q-2QD"/>
+                                        <exclude reference="pVg-f2-ZeX"/>
+                                        <exclude reference="trw-DZ-Evz"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="yQ0-8c-lIT"/>
+                                        <include reference="k8o-3T-fJG"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="2Es-Pm-Od9"/>
+                                        <include reference="WaQ-7G-PAk"/>
+                                        <include reference="e4F-22-vg9"/>
+                                        <include reference="nfP-Sv-iSd"/>
+                                        <include reference="Plj-VS-LTf"/>
+                                        <include reference="oTC-9q-2QD"/>
+                                        <include reference="pVg-f2-ZeX"/>
+                                        <include reference="trw-DZ-Evz"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vx8-LJ-F97" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6wJ-gt-Y9f"/>
+                            <constraint firstItem="Vx8-LJ-F97" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="AXl-i2-gkI"/>
+                            <constraint firstItem="Vx8-LJ-F97" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="LQL-Uz-ReV"/>
+                            <constraint firstItem="Vx8-LJ-F97" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="bT9-2V-v0B"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6wJ-gt-Y9f"/>
+                                <exclude reference="AXl-i2-gkI"/>
+                                <exclude reference="bT9-2V-v0B"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="6wJ-gt-Y9f"/>
+                                <include reference="AXl-i2-gkI"/>
+                                <include reference="bT9-2V-v0B"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="currentLabel" destination="mm6-s8-N96" id="qkK-6n-XmU"/>
+                        <outlet property="historyTable" destination="k8o-3T-fJG" id="zQV-sZ-5fA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
