@@ -15,10 +15,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var historyTable: UITableView!
     
     var data: [CMMotionActivity] = []
+    let motionManager = CMMotionActivityManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         historyTable.dataSource = self
+        startActivites()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -32,6 +34,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedDescending
         })
         historyTable.reloadData()
+    }
+
+    //MARK: CMMotionManager stuff
+    func startActivities() {
+
+        motionManager!.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
+            activity in
+                self.viewController?.currentLabel.text = activity?.humanReadable()
+        })
+        
+        motionManager!.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
+            activities, error in
+                if let act = activities {
+                    updateTable(act)
+                }
+                else {
+                    updateTable([])
+                }
+        })
     }
     
     // MARK: UITableViewDataSource
