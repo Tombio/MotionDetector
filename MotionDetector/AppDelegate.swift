@@ -13,20 +13,21 @@ import CoreMotion
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let motionManager = CMMotionActivityManager()
+    var motionManager: CMMotionActivityManager?
     var viewController: ViewController?
     var activities: [CMMotionActivity]?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        self.motionManager = CMMotionActivityManager()
         self.viewController = self.window?.rootViewController as? ViewController
-        motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
+        motionManager!.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
             activity in
                 self.viewController?.currentLabel.text = activity?.humanReadable()
             
         })
         
-        motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
+        motionManager!.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
             activities, error in
             if let _ = activities {
                 self.activities = activities
