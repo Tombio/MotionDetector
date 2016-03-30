@@ -39,12 +39,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK: CMMotionManager stuff
     func startActivities() {
 
-        motionManager!.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
+        motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
             activity in
                 self.viewController?.currentLabel.text = activity?.humanReadable()
         })
         
-        motionManager!.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
+        motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
             activities, error in
                 if let act = activities {
                     updateTable(act)
