@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         historyTable.dataSource = self
-        startActivites()
+        startActivities()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
