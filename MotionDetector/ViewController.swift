@@ -41,16 +41,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
             activity in
-                self.viewController?.currentLabel.text = activity?.humanReadable()
+                self.currentLabel.text = activity?.humanReadable()
         })
         
         motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
             activities, error in
                 if let act = activities {
-                    updateTable(act)
+                    self.updateTable(act)
                 }
                 else {
-                    updateTable([])
+                    self.updateTable([])
                 }
         })
     }
