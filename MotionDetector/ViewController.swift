@@ -20,39 +20,55 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         historyTable.dataSource = self
-        startActivities()
+        debugPrint("view did load")
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        startActivities()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func updateTable(data: [CMMotionActivity]) {
-        self.data = data.sort({
+        self.data = data.filter({
+            $0.confidence == .High && $0.valid
+        })
+        .sort({
             $0.startDate.compare($1.startDate) == NSComparisonResult.OrderedDescending
         })
         historyTable.reloadData()
     }
 
-    //MARK: CMMotionManager stuff
+    //MARK: CMMotionActivityManager stuff
     func startActivities() {
-
-        motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
-            activity in
-                self.currentLabel.text = activity?.humanReadable()
-        })
+        if CMMotionActivityManager.isActivityAvailable() {
+            self.motionManager.startActivityUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {
+                activity in
+                    guard let activity = activity where activity.valid else { return }
+                    self.currentLabel.text = activity.humanReadable()
+            })
         
-        motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
-            activities, error in
-                if let act = activities {
-                    self.updateTable(act)
-                }
-                else {
-                    self.updateTable([])
-                }
-        })
+            self.motionManager.queryActivityStartingFromDate(NSDate.init(timeIntervalSince1970: 0), toDate: NSDate(), toQueue: NSOperationQueue.currentQueue()!, withHandler: {
+                activities, error in
+                    if let _ = error {
+                        debugPrint(error)
+                    }
+                    if let act = activities {
+                        self.updateTable(act)
+                    }
+                    else {
+                        self.updateTable([])
+                    }
+            })
+        }
+        else {
+            fatalError("No activites available")
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -65,6 +81,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         let act = data[indexPath.row]
+        if act.humanReadable() == "" {
+            debugPrint("Weird case \(act)")
+        }
         cell.textLabel?.text = "\(act.humanReadable())"
         cell.detailTextLabel?.text = "\(act.startDate) confidence: \(act.confidence.humanReadable())"
         
